@@ -87,6 +87,12 @@ npm run dev
 
 ---
 
+## 👥 Team
+
+Built for [Hackathon Name] — AI + Cybersecurity Track
+
+---
+
 ## 📄 License
 
 MIT
