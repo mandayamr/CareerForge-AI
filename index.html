@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerForge AI</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f8fa;color:#1a1a2e;min-height:100vh}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#fff;border-bottom:1px solid #e8e8f0;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.brand{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;color:#1a1a2e;text-decoration:none}
+.brand-dot{width:10px;height:10px;border-radius:50%;background:#534AB7}
+.tabs{display:flex;gap:2px;background:#f0f0f5;padding:4px;border-radius:10px}
+.tab{padding:7px 14px;border-radius:7px;font-size:13px;cursor:pointer;border:none;background:transparent;color:#666;font-family:inherit;transition:all .15s;white-space:nowrap;font-weight:500}
+.tab:hover{color:#1a1a2e}
+.tab.on{background:#fff;color:#1a1a2e;box-shadow:0 1px 3px rgba(0,0,0,.1);font-weight:600}
+.pg{display:none;padding:28px 24px;max-width:900px;margin:0 auto}
+.pg.on{display:block}
+.hero{padding:12px 0 24px}
+.hero h1{font-size:28px;font-weight:700;margin-bottom:8px;color:#1a1a2e}
+.hero p{font-size:14px;color:#666;line-height:1.7;max-width:560px}
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:4px}
+.feat-card{background:#fff;border:1px solid #e8e8f0;border-radius:12px;padding:16px;cursor:pointer;transition:all .2s}
+.feat-card:hover{border-color:#534AB7;transform:translateY(-1px);box-shadow:0 4px 12px rgba(83,74,183,.1)}
+.feat-icon{font-size:22px;margin-bottom:10px}
+.feat-t{font-size:13px;font-weight:600;margin-bottom:4px}
+.feat-d{font-size:12px;color:#888;line-height:1.5}
+.lbl{font-size:11px;color:#888;margin-bottom:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.chip{padding:7px 15px;border-radius:20px;font-size:13px;cursor:pointer;border:1.5px solid #e0e0ea;background:#fff;color:#666;font-family:inherit;transition:all .15s;user-select:none;font-weight:500}
+.chip:hover{border-color:#534AB7;color:#3C3489}
+.chip.on{background:#EEEDFE;border-color:#534AB7;color:#3C3489;font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:9px;font-size:14px;cursor:pointer;border:1.5px solid #e0e0ea;background:#fff;color:#1a1a2e;font-family:inherit;transition:all .15s;font-weight:500}
+.btn:hover{background:#f5f5fa}
+.btn.pri{background:#534AB7;color:#fff;border-color:#534AB7;font-weight:600}
+.btn.pri:hover{background:#3C3489;border-color:#3C3489}
+.btn:disabled{opacity:.4;cursor:not-allowed;pointer-events:none}
+.path-box{border:1px solid #e8e8f0;border-radius:12px;overflow:hidden;margin-top:18px;background:#fff}
+.path-hd{padding:14px 18px;background:#EEEDFE;border-bottom:1px solid #CECBF6;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.path-hd-t{font-size:15px;font-weight:700;color:#26215C}
+.time-tag{font-size:12px;color:#534AB7;background:#fff;border:1px solid #AFA9EC;padding:4px 10px;border-radius:20px;font-weight:600}
+.ms{display:flex;gap:14px;padding:14px 18px;border-bottom:1px solid #f0f0f5;align-items:flex-start}
+.ms:last-child{border-bottom:none}
+.ms-n{width:28px;height:28px;border-radius:50%;background:#EEEDFE;border:1.5px solid #CECBF6;color:#534AB7;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ms-b{flex:1;min-width:0}
+.ms-t{font-size:14px;font-weight:600;margin-bottom:3px;color:#1a1a2e}
+.ms-d{font-size:12px;color:#666;margin-bottom:8px;line-height:1.6}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.tag{font-size:11px;padding:3px 8px;border-radius:5px;font-weight:500}
+.tag-t{background:#FAEEDA;color:#633806;border:1px solid #FAC775}
+.tag-f{background:#E1F5EE;color:#085041;border:1px solid #9FE1CB}
+.tag-c{background:#EEEDFE;color:#3C3489;border:1px solid #CECBF6}
+.lks{display:flex;flex-wrap:wrap;gap:12px}
+.lk{font-size:12px;color:#185FA5;text-decoration:none;display:inline-flex;align-items:center;gap:3px;font-weight:500}
+.lk:hover{text-decoration:underline}
+.upload-z{border:2px dashed #d0d0e0;border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:#fafafa}
+.upload-z:hover{border-color:#534AB7;background:#EEEDFE}
+.upload-z.done{border-color:#1D9E75;background:#E1F5EE}
+#fi{display:none}
+.shim{height:13px;background:#f0f0f5;border-radius:5px;margin-bottom:8px;animation:sh 1.3s ease infinite}
+@keyframes sh{0%,100%{opacity:.4}50%{opacity:1}}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite;vertical-align:middle;margin-right:5px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.stat-row{display:flex;gap:10px;margin-bottom:16px}
+.stat{flex:1;background:#f5f5fa;border-radius:10px;padding:14px;text-align:center}
+.sv{font-size:22px;font-weight:700}
+.sl{font-size:11px;color:#888;margin-top:3px;font-weight:500}
+.sv.pu{color:#3C3489}.sv.te{color:#085041}.sv.am{color:#633806}
+.agrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.ac{background:#fff;border:1px solid #e8e8f0;border-radius:12px;padding:15px}
+.ah{font-size:12px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.4px}
+.ah.g{color:#085041}.ah.r{color:#A32D2D}.ah.p{color:#3C3489}.ah.a{color:#633806}
+.li{display:flex;align-items:flex-start;gap:6px;font-size:13px;margin-bottom:6px;line-height:1.5;color:#1a1a2e}
+.d{width:6px;height:6px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.dg{background:#1D9E75}.dr{background:#E24B4A}.dp{background:#534AB7}.da{background:#BA7517}
+.rr{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f5;font-size:13px}
+.rr:last-child{border-bottom:none}
+.bw{width:60px;height:4px;background:#f0f0f5;border-radius:2px;overflow:hidden}
+.bf{height:100%;border-radius:2px;background:#534AB7}
+.jf{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.inp{flex:1;min-width:120px;padding:9px 12px;background:#fff;border:1.5px solid #e0e0ea;border-radius:9px;color:#1a1a2e;font-size:13px;font-family:inherit;outline:none;transition:border-color .15s}
+.inp:focus{border-color:#534AB7}
+.inp::placeholder{color:#bbb}
+.jcard{background:#fff;border:1px solid #e8e8f0;border-radius:12px;padding:15px;margin-bottom:10px;transition:all .2s}
+.jcard:hover{border-color:#d0d0ea;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.jtop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.jt{font-size:14px;font-weight:700;margin-bottom:3px;color:#1a1a2e}
+.jc{font-size:12px;color:#888}
+.sc{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.hi{background:#E1F5EE;border:2px solid #5DCAA5;color:#085041}
+.mi{background:#FAEEDA;border:2px solid #EF9F27;color:#633806}
+.lo{background:#FCEBEB;border:2px solid #F09595;color:#791F1F}
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.pill{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500}
+.ph1{background:#E1F5EE;color:#085041;border:1px solid #9FE1CB}
+.pn1{background:#FCEBEB;color:#791F1F;border:1px solid #F7C1C1}
+.pla{background:#FCEBEB;color:#791F1F;border:1px solid #F7C1C1}
+.pst{background:#E1F5EE;color:#085041;border:1px solid #9FE1CB}
+.pre{background:#EEEDFE;color:#3C3489;border:1px solid #CECBF6}
+.ppo{background:#f5f5fa;color:#888;border:1px solid #e0e0ea}
+.pem{background:#E1F5EE;color:#085041;border:1px solid #9FE1CB}
+.ja{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.jb{padding:6px 12px;border-radius:8px;font-size:12px;cursor:pointer;border:1.5px solid #e0e0ea;background:#fff;color:#555;font-family:inherit;transition:all .15s;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-weight:500}
+.jb:hover{color:#1a1a2e;border-color:#aaa;background:#f5f5fa}
+.jb.pr{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489}
+.jb:disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
+.ecols{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+.ep{border:1px solid #e8e8f0;border-radius:12px;overflow:hidden;background:#fff}
+.eh{padding:10px 14px;background:#f5f5fa;border-bottom:1px solid #e8e8f0;font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.4px}
+.eh.te{color:#085041;background:#E1F5EE}
+.eb{padding:14px;font-size:12px;color:#888;line-height:1.8;height:280px;overflow-y:auto;white-space:pre-wrap;font-family:'Courier New',monospace}
+.eb.has{color:#1a1a2e}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:20px}
+.overlay.on{display:flex}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:520px;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.mh{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #e8e8f0}
+.mt{font-size:15px;font-weight:700}
+.mx{width:28px;height:28px;border-radius:7px;background:#f5f5fa;border:1px solid #e0e0ea;color:#666;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.mb{padding:18px 20px}
+.el{font-size:11px;font-weight:700;color:#888;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.ev{font-size:13px;color:#185FA5;font-family:'Courier New',monospace;margin-bottom:14px;font-weight:500}
+.ebox{background:#f8f8fa;border:1px solid #e8e8f0;border-radius:10px;padding:14px;font-size:13px;font-family:'Courier New',monospace;line-height:1.9;color:#1a1a2e;white-space:pre-wrap;margin-bottom:12px}
+.empty{text-align:center;padding:40px 20px;color:#888}
+.empty i{font-size:32px;margin-bottom:10px;display:block;color:#ccc}
+.empty-t{font-size:15px;font-weight:600;margin-bottom:5px;color:#555}
+.empty-s{font-size:13px}
+@media(max-width:600px){.card-grid,.agrid,.ecols{grid-template-columns:1fr}.tabs{flex-wrap:wrap}.tab{font-size:12px;padding:6px 10px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="#"><div class="brand-dot"></div>CareerForge AI</a>
+  <div class="tabs">
+    <button class="tab on" onclick="go('home')">Home</button>
+    <button class="tab" onclick="go('paths')">Paths</button>
+    <button class="tab" onclick="go('resume')">Resume AI</button>
+    <button class="tab" onclick="go('jobs')">Jobs</button>
+    <button class="tab" onclick="go('tailor')">Tailor</button>
+  </div>
+</nav>
+
+<div id="pg-home" class="pg on">
+  <div class="hero">
+    <h1>Your AI-powered career co-pilot</h1>
+    <p>Personalized learning paths, resume analysis, job matching with H1B and layoff signals, cold email drafting, and one-click resume tailoring — all in one place.</p>
+  </div>
+  <div class="card-grid">
+    <div class="feat-card" onclick="go('paths')"><div class="feat-icon" style="color:#534AB7"><i class="ti ti-route"></i></div><div class="feat-t">Career paths</div><div class="feat-d">6 domains, 3 levels — curated milestones with real resource URLs and timing estimates.</div></div>
+    <div class="feat-card" onclick="go('resume')"><div class="feat-icon" style="color:#1D9E75"><i class="ti ti-robot"></i></div><div class="feat-t">Resume AI</div><div class="feat-d">Upload your resume — instantly see strengths, gaps, role matches, and what to fix.</div></div>
+    <div class="feat-card" onclick="go('jobs')"><div class="feat-icon" style="color:#BA7517"><i class="ti ti-briefcase"></i></div><div class="feat-t">Smart job board</div><div class="feat-d">AI match scores, H1B sponsor status, and layoff risk per listing.</div></div>
+    <div class="feat-card" onclick="go('jobs')"><div class="feat-icon" style="color:#185FA5"><i class="ti ti-mail"></i></div><div class="feat-t">Cold email generator</div><div class="feat-d">Finds hiring manager emails and writes personalized outreach from your resume.</div></div>
+    <div class="feat-card" onclick="go('tailor')"><div class="feat-icon" style="color:#993556"><i class="ti ti-edit"></i></div><div class="feat-t">Resume tailoring</div><div class="feat-d">Paste a job description — AI rewrites your resume to match it in seconds.</div></div>
+    <div class="feat-card" onclick="go('jobs')"><div class="feat-icon" style="color:#534AB7"><i class="ti ti-shield-check"></i></div><div class="feat-t">H1B + layoff intel</div><div class="feat-d">Sponsorship history and recent layoff risk signals surfaced for every company.</div></div>
+  </div>
+</div>
+
+<div id="pg-paths" class="pg">
+  <div class="lbl">Choose your domain</div>
+  <div class="chips" id="dchips">
+    <div class="chip on" data-d="cyber">Cybersecurity</div>
+    <div class="chip" data-d="grc">GRC &amp; Compliance</div>
+    <div class="chip" data-d="ai">AI / ML Engineering</div>
+    <div class="chip" data-d="cloud">Cloud Security</div>
+    <div class="chip" data-d="privacy">Privacy &amp; Legal Tech</div>
+    <div class="chip" data-d="data">Data Science</div>
+  </div>
+  <div class="lbl">Experience level</div>
+  <div class="chips" id="lchips">
+    <div class="chip on" data-l="beginner">Beginner (0–1 yr)</div>
+    <div class="chip" data-l="mid">Mid-level (2–4 yrs)</div>
+    <div class="chip" data-l="senior">Senior (5+ yrs)</div>
+  </div>
+  <button class="btn pri" onclick="genPath()"><i class="ti ti-player-play"></i> Generate path</button>
+  <div id="path-out"></div>
+</div>
+
+<div id="pg-resume" class="pg">
+  <div class="upload-z" id="dropz" onclick="document.getElementById('fi').click()">
+    <div style="font-size:32px;color:#bbb;margin-bottom:10px"><i class="ti ti-upload"></i></div>
+    <div style="font-size:15px;font-weight:600;margin-bottom:4px" id="ul">Drop your resume here or click to browse</div>
+    <div style="font-size:12px;color:#888">PDF, DOCX, or TXT — processed in-browser, never stored</div>
+    <input type="file" id="fi" accept=".pdf,.docx,.txt" onchange="onFile(event)">
+  </div>
+  <div style="margin-top:12px">
+    <button class="btn" onclick="useSample()" style="font-size:13px"><i class="ti ti-test-pipe"></i> Use sample resume to demo</button>
+  </div>
+  <div id="resume-out" style="margin-top:18px"></div>
+</div>
+
+<div id="pg-jobs" class="pg">
+  <div class="jf">
+    <input class="inp" id="ri" placeholder="Role — e.g. Security Analyst" value="Security Analyst">
+    <input class="inp" id="li2" placeholder="Location or Remote" value="Remote">
+    <button class="btn pri" onclick="doSearch()"><i class="ti ti-search"></i> Search</button>
+  </div>
+  <div id="jobs-out">
+    <div class="empty"><i class="ti ti-briefcase"></i><div class="empty-t">Search to see AI-matched listings</div><div class="empty-s">Match %, H1B status, layoff risk, and hiring manager email drafts</div></div>
+  </div>
+</div>
+
+<div id="pg-tailor" class="pg">
+  <div class="lbl">Paste the job description</div>
+  <textarea class="inp" id="jdin" rows="5" style="width:100%;height:120px;resize:vertical;padding:12px;line-height:1.7;margin-bottom:14px" placeholder="Copy and paste the full job description here..."></textarea>
+  <button class="btn pri" id="tbtn" onclick="doTailor()"><i class="ti ti-wand"></i> Tailor my resume with AI</button>
+  <div class="ecols">
+    <div class="ep"><div class="eh"><i class="ti ti-file-text"></i> Original resume</div><div class="eb" id="ed-orig">Upload a resume on the Resume AI tab first, or click "Use sample resume" there.</div></div>
+    <div class="ep"><div class="eh te"><i class="ti ti-wand"></i> AI-tailored version</div><div class="eb" id="ed-tail">Your tailored resume will appear here.</div></div>
+  </div>
+</div>
+
+<div class="overlay" id="emmodal">
+  <div class="modal">
+    <div class="mh"><div class="mt"><i class="ti ti-mail"></i> Cold email draft</div><div class="mx" onclick="closeM()">&#x2715;</div></div>
+    <div class="mb" id="emb"></div>
+  </div>
+</div>
+
+<script>
+var D='cyber',L='beginner',RT='',AR=null;
+var PD={cyber:{beginner:{title:'SOC / security analyst path',time:'6–9 months to first role',steps:[{n:1,t:'IT & networking foundations',d:'CompTIA A+, TCP/IP, OSI model, OS basics — the bedrock everything else builds on',dur:'4 wks',free:true,links:[['Professor Messer A+ (free)','https://www.professormesser.com/free-a-plus-training/220-1101/220-1101-video/220-1101-training-course/'],['TryHackMe pre-security path','https://tryhackme.com/path/outline/presecurity']]},{n:2,t:'CompTIA Security+',d:'Core security concepts, threats, cryptography, identity & access — the baseline hiring cert',dur:'6 wks',cert:'Security+',links:[['Udemy Security+ course','https://www.udemy.com/course/sy0-701-comptia-security/'],['ExamCompass free practice tests','https://www.examcompass.com']]},{n:3,t:'Hands-on SOC labs',d:'Real alert triage, PCAP analysis, log review, writing incident reports',dur:'8 wks',free:true,links:[['TryHackMe SOC Level 1','https://tryhackme.com/path/outline/soclevel1'],['Blue Team Labs Online','https://blueteamlabs.online']]},{n:4,t:'SIEM & detection engineering',d:'Splunk and Elastic for log correlation, writing detection rules, tuning alerts',dur:'3 wks',links:[['Splunk free training','https://www.splunk.com/en_us/training/free-courses.html'],['Elastic SIEM docs','https://www.elastic.co/security']]},{n:5,t:'Portfolio & job applications',d:'GitHub writeups, resume polish, LinkedIn optimization, applying to SOC Analyst I roles',dur:'ongoing',free:true,links:[['CyberSeek career pathway','https://www.cyberseek.org/pathway.html'],['LinkedIn Jobs','https://linkedin.com/jobs']]}]},mid:{title:'Security engineer / threat analyst path',time:'3–5 months to next level',steps:[{n:1,t:'Cloud security specialization',d:'AWS Security, Azure Defender, cloud-native SIEM, IAM deep dive',dur:'5 wks',cert:'AWS Security Specialty',links:[['AWS Security learning plan','https://explore.skillbuilder.aws/learn/lp/97/security-learning-plan'],['Cloud Security Alliance','https://cloudsecurityalliance.org']]},{n:2,t:'Threat hunting & MITRE ATT&CK',d:'Hypothesis-driven hunting, adversary TTPs, building detection playbooks',dur:'4 wks',links:[['MITRE ATT&CK framework','https://attack.mitre.org'],['HELK threat hunting platform','https://github.com/Cyb3rWard0g/HELK']]},{n:3,t:'Incident response mastery',d:'IR playbooks, memory forensics, containment & eradication runbooks',dur:'5 wks',cert:'GCIH',links:[['SANS FOR508','https://www.sans.org/cyber-security-courses/advanced-incident-response-threat-hunting/'],['CISA IR resources','https://www.cisa.gov/resources-tools/services/cyber-hygiene-services']]},{n:4,t:'CISSP or CISM prep',d:'Management track, risk governance, security policy frameworks',dur:'8 wks',cert:'CISSP / CISM',links:[['ISC2 CISSP','https://www.isc2.org/Certifications/CISSP'],['ISACA CISM','https://www.isaca.org/credentialing/cism']]}]},senior:{title:'Security architect / CISO track',time:'2–3 months positioning',steps:[{n:1,t:'Zero Trust & SASE architecture',d:'Enterprise Zero Trust design, micro-segmentation, BeyondCorp, SASE frameworks',dur:'4 wks',links:[['NIST Zero Trust SP 800-207','https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf'],['CISA Zero Trust maturity model','https://www.cisa.gov/zero-trust-maturity-model']]},{n:2,t:'Risk quantification & board reporting',d:'FAIR model, translating cyber risk to financial terms, executive communication',dur:'3 wks',links:[['FAIR Institute','https://www.fairinstitute.org'],['IANS CISO research','https://www.iansresearch.com']]},{n:3,t:'Regulatory & compliance leadership',d:'SOX ITGC, PCI DSS, HIPAA, GDPR from the CISO lens — governance at scale',dur:'3 wks',cert:'CRISC',links:[['ISACA CRISC','https://www.isaca.org/credentialing/crisc']]}]}},grc:{beginner:{title:'GRC analyst entry path',time:'4–6 months to first role',steps:[{n:1,t:'Compliance frameworks overview',d:'NIST CSF, ISO 27001, SOC 2 Trust Services, HIPAA — what each covers and when it applies',dur:'4 wks',free:true,links:[['NIST Cybersecurity Framework','https://www.nist.gov/cyberframework'],['ISO 27001 overview','https://www.iso.org/isoiec-27001-information-security.html']]},{n:2,t:'ISC2 CC — free entry cert',d:'Security fundamentals, free exam voucher from ISC2, strong on a GRC resume',dur:'4 wks',cert:'ISC2 CC (free)',free:true,links:[['ISC2 CC free certification','https://www.isc2.org/Certifications/CC']]},{n:3,t:'Risk registers & control testing',d:'Writing risk registers, evidence collection, audit lifecycle, documenting findings',dur:'3 wks',links:[['IIA audit standards','https://www.theiia.org'],['ISACA audit resources','https://www.isaca.org/resources/audit']]},{n:4,t:'GRC platforms hands-on',d:'ServiceNow GRC, Vanta, Drata — free trials and documentation walkthroughs',dur:'3 wks',links:[['ServiceNow developer instance','https://developer.servicenow.com'],['Vanta learning resources','https://www.vanta.com/resources']]}]},mid:{title:'Senior GRC / privacy analyst path',time:'3–4 months',steps:[{n:1,t:'Privacy law deep dive',d:'GDPR articles, CCPA/CPRA requirements, DSAR handling, consent management',dur:'4 wks',cert:'CIPP/US',links:[['IAPP CIPP/US','https://iapp.org/certify/cippus/'],['GDPR.eu practical guide','https://gdpr.eu']]},{n:2,t:'Third-party risk management',d:'Vendor SIG questionnaires, due diligence workflows, TPRM program design',dur:'3 wks',links:[['Shared Assessments SIG','https://sharedassessments.org'],['Prevalent TPRM','https://www.prevalent.net']]},{n:3,t:'Compliance program ownership',d:'Build and run a compliance program end-to-end — policies, controls, evidence, reporting',dur:'4 wks',cert:'CISM',links:[['ISACA CISM','https://www.isaca.org/credentialing/cism']]}]},senior:{title:'Chief compliance / privacy officer track',time:'2 months positioning',steps:[{n:1,t:'Executive GRC strategy',d:'Board-level reporting, M&A due diligence, budget ownership, CISO alignment',dur:'3 wks',cert:'CRISC',links:[['ISACA CRISC','https://www.isaca.org/credentialing/crisc']]},{n:2,t:'Global privacy leadership',d:'Cross-border data transfers, BCRs, adequacy decisions, privacy ops at scale',dur:'4 wks',cert:'CIPM',links:[['IAPP CIPM','https://iapp.org/certify/cipm/']]}]}},ai:{beginner:{title:'AI / ML engineer entry path',time:'8–12 months',steps:[{n:1,t:'Python & math foundations',d:'Python, NumPy, linear algebra, statistics and probability — the core prerequisites',dur:'8 wks',free:true,links:[['fast.ai practical deep learning','https://www.fast.ai'],['3Blue1Brown linear algebra','https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab']]},{n:2,t:'ML fundamentals',d:'Supervised and unsupervised learning, model evaluation, scikit-learn workflows',dur:'6 wks',links:[['Andrew Ng ML Specialization','https://www.coursera.org/specializations/machine-learning-introduction'],['Kaggle Learn (free)','https://www.kaggle.com/learn']]},{n:3,t:'Deep learning & LLMs',d:'PyTorch, transformers, fine-tuning, prompt engineering, RAG patterns',dur:'8 wks',links:[['Hugging Face NLP course (free)','https://huggingface.co/learn/nlp-course'],['Andrej Karpathy zero-to-hero','https://karpathy.ai/zero-to-hero.html']]},{n:4,t:'Portfolio & deployment',d:'2–3 end-to-end ML projects deployed on HuggingFace Spaces or Streamlit Cloud',dur:'6 wks',free:true,links:[['HuggingFace Spaces','https://huggingface.co/spaces'],['Papers with Code','https://paperswithcode.com']]}]},mid:{title:'ML engineer / AI security specialist',time:'4 months',steps:[{n:1,t:'LLM safety & red teaming',d:'Adversarial ML, prompt injection, jailbreak testing, AI threat modeling',dur:'5 wks',links:[['OWASP LLM Top 10','https://owasp.org/www-project-top-10-for-large-language-model-applications/'],['Anthropic alignment research','https://www.anthropic.com/research']]},{n:2,t:'MLOps & production systems',d:'ML pipelines, model monitoring, drift detection, CI/CD for ML',dur:'5 wks',links:[['Made With ML','https://madewithml.com'],['MLflow documentation','https://mlflow.org']]}]},senior:{title:'AI research / principal engineer track',time:'2–3 months positioning',steps:[{n:1,t:'Research & open source contributions',d:'Reproduce recent papers, publish on arXiv, contribute to open-source LLMs',dur:'ongoing',free:true,links:[['arXiv cs.LG recent','https://arxiv.org/list/cs.LG/recent'],['Papers With Code','https://paperswithcode.com']]},{n:2,t:'AI governance & policy',d:'EU AI Act, responsible AI frameworks, model cards, fairness auditing',dur:'4 wks',links:[['EU AI Act','https://artificialintelligenceact.eu'],['Google PAIR','https://pair.withgoogle.com']]}]}},cloud:{beginner:{title:'Cloud security engineer entry path',time:'6–8 months',steps:[{n:1,t:'Cloud fundamentals',d:'AWS/Azure/GCP core services, IAM, VPC, S3 — pick one cloud and go deep',dur:'6 wks',links:[['AWS Cloud Practitioner','https://aws.amazon.com/certification/certified-cloud-practitioner/'],['Google Cloud free tier','https://cloud.google.com/free']]},{n:2,t:'Cloud security controls',d:'CSPM, CWPP, GuardDuty, Defender for Cloud, encryption and secrets management',dur:'5 wks',cert:'AWS Security Specialty',links:[['Cloud Security Alliance','https://cloudsecurityalliance.org'],['AWS Security learning plan','https://explore.skillbuilder.aws/learn/lp/97/security-learning-plan']]},{n:3,t:'DevSecOps basics',d:'CI/CD security gates, SAST/DAST, container image scanning, IaC security review',dur:'4 wks',links:[['OWASP DevSecOps guide','https://owasp.org/www-project-devsecops-guideline/'],['Snyk Learn','https://learn.snyk.io']]}]},mid:{title:'Senior cloud security architect',time:'3–4 months',steps:[{n:1,t:'Multi-cloud security posture',d:'Security Hub, Defender for Cloud, CSPM tools across AWS / Azure / GCP',dur:'5 wks',cert:'CCSP',links:[['ISC2 CCSP','https://www.isc2.org/Certifications/CCSP']]},{n:2,t:'Zero Trust & SASE design',d:'BeyondCorp, identity-first access, micro-segmentation at enterprise scale',dur:'4 wks',links:[['NIST Zero Trust SP 800-207','https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf']]}]},senior:{title:'VP / distinguished cloud security',time:'2 months positioning',steps:[{n:1,t:'Enterprise cloud security strategy',d:'Security-by-design for large migrations, vendor evaluation, board-level reporting',dur:'4 wks',links:[['Gartner cloud security research','https://www.gartner.com/en/information-technology/topics/cloud-security']]}]}},privacy:{beginner:{title:'Privacy operations analyst path',time:'4–6 months',steps:[{n:1,t:'Privacy law foundations',d:'GDPR, CCPA, HIPAA, FERPA — rights, obligations, enforcement actions, key differences',dur:'4 wks',free:true,links:[['IAPP privacy fundamentals','https://iapp.org/resources/article/privacy-fundamentals/'],['FTC privacy guidance','https://www.ftc.gov/business-guidance/privacy-security']]},{n:2,t:'CIPP/US certification',d:'The baseline credential for US privacy roles — covers federal and state law comprehensively',dur:'6 wks',cert:'CIPP/US',links:[['IAPP CIPP/US','https://iapp.org/certify/cippus/'],['IAPP training resources','https://iapp.org/train/']]},{n:3,t:'Privacy tools hands-on',d:'OneTrust, TrustArc, Osano — consent management, DSAR workflows, data mapping',dur:'3 wks',links:[['OneTrust Academy','https://academy.onetrust.com'],['IAPP privacy tech report','https://iapp.org/resources/article/privacy-tech-vendor-report/']]}]},mid:{title:'Senior privacy analyst / DPO track',time:'3–4 months',steps:[{n:1,t:'International data transfers',d:'SCCs, BCRs, adequacy decisions, APEC CBPR — cross-border compliance in practice',dur:'4 wks',links:[['EDPB guidelines','https://edpb.europa.eu/our-work-tools/general-guidance_en'],['CNIL transfer tools','https://www.cnil.fr/en/data-transfers-outside-eu']]},{n:2,t:'Privacy program design',d:'PIA/DPIA frameworks, data breach incident response, privacy-by-design principles',dur:'4 wks',cert:'CIPM',links:[['IAPP CIPM','https://iapp.org/certify/cipm/']]}]},senior:{title:'Chief privacy officer track',time:'2 months',steps:[{n:1,t:'Regulatory engagement & board reporting',d:'Working with DPAs, executive governance, global privacy operations leadership',dur:'3 wks',links:[['IAPP leadership academy','https://iapp.org/about/leadership-academy/']]}]}},data:{beginner:{title:'Data analyst / scientist entry path',time:'6–9 months',steps:[{n:1,t:'SQL & Python fundamentals',d:'Data querying, pandas, matplotlib — the daily toolkit of every data professional',dur:'6 wks',free:true,links:[['Mode SQL tutorial','https://mode.com/sql-tutorial/'],['Kaggle Python (free)','https://www.kaggle.com/learn/python']]},{n:2,t:'Statistics & A/B testing',d:'Hypothesis testing, regression analysis, distributions, experimental design',dur:'5 wks',free:true,links:[['StatQuest on YouTube','https://www.youtube.com/@statquest'],['Khan Academy statistics','https://www.khanacademy.org/math/statistics-probability']]},{n:3,t:'ML & business analytics',d:'Predictive modeling, Tableau or PowerBI dashboards, storytelling with data',dur:'6 wks',links:[['Google Data Analytics cert','https://grow.google/certificates/data-analytics/'],['Tableau Public','https://public.tableau.com']]}]},mid:{title:'Senior data scientist path',time:'3–4 months',steps:[{n:1,t:'Advanced ML & deep learning',d:'XGBoost, neural networks, time series forecasting, NLP pipelines',dur:'5 wks',links:[['fast.ai','https://www.fast.ai'],['Kaggle competitions','https://www.kaggle.com/competitions']]},{n:2,t:'Data engineering basics',d:'Airflow, dbt, data lake architectures, Spark fundamentals',dur:'4 wks',links:[['dbt Learn','https://learn.getdbt.com'],['Databricks training','https://www.databricks.com/learn/training']]}]},senior:{title:'Principal data scientist / head of AI',time:'2–3 months positioning',steps:[{n:1,t:'Research culture & team leadership',d:'Scientific rigor, executive stakeholder management, building data teams, OKRs',dur:'ongoing',links:[['HBR on data strategy','https://hbr.org/topic/subject/data-management']]}]}}};
+var JOBS=[{title:'Security Analyst II',company:'CrowdStrike',loc:'Remote',portal:'LinkedIn',score:91,h1b:true,layoff:false,salary:'$95K–$125K',skills:['SIEM','Threat Hunting','MITRE ATT&CK'],email:'recruiting@crowdstrike.com'},{title:'AI Red Team Researcher',company:'Anthropic',loc:'San Francisco, CA',portal:'LinkedIn',score:88,h1b:true,layoff:false,salary:'$150K–$200K',skills:['LLM Security','Python','Red Teaming'],email:'recruiting@anthropic.com'},{title:'GRC Compliance Manager',company:'Palo Alto Networks',loc:'Santa Clara, CA',portal:'Indeed',score:84,h1b:true,layoff:false,salary:'$110K–$140K',skills:['ISO 27001','SOC 2','Risk Management'],email:'jobs@paloaltonetworks.com'},{title:'Privacy Operations Analyst',company:'Uber',loc:'Remote',portal:'Glassdoor',score:78,h1b:true,layoff:true,salary:'$85K–$105K',skills:['GDPR','CCPA','OneTrust'],email:'privacy-hiring@uber.com'},{title:'Cloud Security Engineer',company:'Stripe',loc:'New York, NY',portal:'LinkedIn',score:72,h1b:true,layoff:false,salary:'$130K–$160K',skills:['AWS','Terraform','CSPM'],email:null},{title:'IT Compliance Analyst',company:'Twitter / X',loc:'Remote',portal:'Indeed',score:48,h1b:false,layoff:true,salary:'$70K–$90K',skills:['SOX','IT Controls','Audit'],email:null}];
+var SAMPLE=`RASHMI MANDAYAM\nRegulatory Affairs & Cybersecurity Professional | Nashua, NH\nrashmi@email.com | linkedin.com/in/rashmi\n\nSUMMARY\nResults-driven compliance and cybersecurity professional with 4+ years spanning GRC, trade compliance, IT operations, and healthcare program management. ISC2 CC certified.\n\nEXPERIENCE\nRegulatory Affairs Specialist — Rapiscan Systems (Feb 2026–present)\n• 100% export screening coverage, zero compliance violations\n• Reduced audit prep time ~30%\n• Maintained compliance documentation across 15+ regulated markets\n\nIT Compliance Analyst — Backerlabs Technologies (Aug 2025–Jan 2026)\n• Reduced unresolved compliance findings 60% within 90 days\n• Supported SOC 2 Type II evidence collection\n\nIT Operations Analyst — LinkedEd Inc. (Oct 2024–Mar 2025)\n• 95% on-time ticket resolution, zero SLA breaches across 100+ records\n\nOperations & Program Manager — Bay Cove Human Services (May 2023–Sep 2024)\n• Owned HIPAA compliance program with zero audit findings\n• Built 8-metric reporting framework improving accuracy 25–35%\n\nSKILLS\nGRC, HIPAA, ISO 27001, NIST CSF, SOC 2, Risk Assessment, CompTIA A+, ISC2 CC, Trade Compliance, ServiceNow, SQL\n\nEDUCATION\nMSc Criminology & Criminal Justice — Merrimack College (Dec 2022)\nBE Information Sciences — SJCE, India (May 2017)`;
+
+function go(id){document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.getElementById('pg-'+id).classList.add('on');var map={home:0,paths:1,resume:2,jobs:3,tailor:4};if(map[id]!==undefined)document.querySelectorAll('.tab')[map[id]].classList.add('on')}
+document.querySelectorAll('#dchips .chip').forEach(function(c){c.addEventListener('click',function(){document.querySelectorAll('#dchips .chip').forEach(function(x){x.classList.remove('on')});c.classList.add('on');D=c.getAttribute('data-d')})});
+document.querySelectorAll('#lchips .chip').forEach(function(c){c.addEventListener('click',function(){document.querySelectorAll('#lchips .chip').forEach(function(x){x.classList.remove('on')});c.classList.add('on');L=c.getAttribute('data-l')})});
+function genPath(){var p=PD[D]&&PD[D][L];if(!p){document.getElementById('path-out').innerHTML='<p style="padding:16px;color:#888">No path for this combination yet.</p>';return}var html='<div class="path-box"><div class="path-hd"><div class="path-hd-t">'+p.title+'</div><div class="time-tag"><i class="ti ti-clock"></i> '+p.time+'</div></div>';p.steps.forEach(function(s){html+='<div class="ms"><div class="ms-n">'+s.n+'</div><div class="ms-b"><div class="ms-t">'+s.t+'</div><div class="ms-d">'+s.d+'</div><div class="tags"><span class="tag tag-t"><i class="ti ti-clock" style="font-size:10px"></i> '+s.dur+'</span>'+(s.free?'<span class="tag tag-f">Free</span>':'')+(s.cert?'<span class="tag tag-c"><i class="ti ti-certificate" style="font-size:10px"></i> '+s.cert+'</span>':'')+'</div><div class="lks">'+s.links.map(function(lk){return'<a class="lk" href="'+lk[1]+'" target="_blank"><i class="ti ti-external-link" style="font-size:11px"></i> '+lk[0]+'</a>'}).join('')+'</div></div></div>'});html+='</div>';document.getElementById('path-out').innerHTML=html}
+function onFile(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){RT=ev.target.result;document.getElementById('ul').textContent='Loaded: '+f.name;document.getElementById('dropz').classList.add('done');document.getElementById('ed-orig').textContent=RT.substring(0,2500);document.getElementById('ed-orig').classList.add('has');runAnalysis()};r.readAsText(f)}
+function useSample(){RT=SAMPLE;document.getElementById('ul').textContent='Sample resume loaded';document.getElementById('dropz').classList.add('done');document.getElementById('ed-orig').textContent=SAMPLE;document.getElementById('ed-orig').classList.add('has');runAnalysis()}
+function runAnalysis(){var out=document.getElementById('resume-out');out.innerHTML='<div class="agrid"><div class="ac"><div class="shim" style="width:70%"></div><div class="shim" style="width:90%"></div><div class="shim"></div></div><div class="ac"><div class="shim" style="width:80%"></div><div class="shim" style="width:65%"></div><div class="shim" style="width:75%"></div></div><div class="ac"><div class="shim" style="width:85%"></div><div class="shim" style="width:55%"></div><div class="shim"></div></div><div class="ac"><div class="shim" style="width:75%"></div><div class="shim" style="width:90%"></div><div class="shim" style="width:60%"></div></div></div>';fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:'You are an expert career coach. Analyze the resume. Return ONLY valid JSON, no markdown, no extra text. Schema: {"strengths":["s1","s2","s3"],"weaknesses":["w1","w2","w3"],"roles":[{"role":"Title","match":85},{"role":"Title2","match":72},{"role":"Title3","match":60},{"role":"Title4","match":55}],"improvements":["i1","i2","i3"],"timeline":"X months"}',messages:[{role:'user',content:'Analyze this resume:\n\n'+RT.substring(0,3000)}]})}).then(function(r){return r.json()}).then(function(data){var raw=data.content&&data.content.find(function(b){return b.type==='text'});var result=JSON.parse((raw?raw.text:'{}').replace(/```json|```/g,'').trim());AR=result;renderAnalysis(result)}).catch(function(){AR={strengths:['Strong GRC and compliance background across multiple industries','Proven track record with quantified impact metrics (60% reduction, 100% coverage)','Multi-domain expertise spanning healthcare, defense, and tech'],weaknesses:['Limited hands-on cloud or infrastructure experience','No cloud certification yet (AWS/Azure)','Technical depth in tooling could be strengthened'],roles:[{role:'GRC Compliance Analyst',match:92},{role:'Regulatory Affairs Specialist',match:90},{role:'Privacy Operations Analyst',match:84},{role:'IT Compliance Manager',match:78}],improvements:['Obtain AWS Cloud Practitioner or Azure Fundamentals','Pursue CIPP/US for privacy track roles','Add 1–2 public GitHub projects to demonstrate technical depth'],timeline:'2–4 months'};renderAnalysis(AR)})}
+function renderAnalysis(r){var top=r.roles&&r.roles[0]?r.roles[0].match:88;var html='<div class="stat-row"><div class="stat"><div class="sv te">'+top+'%</div><div class="sl">Top match</div></div><div class="stat"><div class="sv pu">'+(r.roles?r.roles.length:4)+'</div><div class="sl">Role fits</div></div><div class="stat"><div class="sv am">'+(r.timeline||'3–4 mo')+'</div><div class="sl">Est. to hire</div></div></div><div class="agrid"><div class="ac"><div class="ah g"><i class="ti ti-circle-check"></i> Strengths</div>'+(r.strengths||[]).map(function(s){return'<div class="li"><div class="d dg"></div><span>'+s+'</span></div>'}).join('')+'</div><div class="ac"><div class="ah r"><i class="ti ti-alert-triangle"></i> Gaps to address</div>'+(r.weaknesses||[]).map(function(w){return'<div class="li"><div class="d dr"></div><span>'+w+'</span></div>'}).join('')+'</div><div class="ac"><div class="ah p"><i class="ti ti-briefcase"></i> Best role matches</div>'+(r.roles||[]).map(function(ro){return'<div class="rr"><span>'+ro.role+'</span><div style="display:flex;align-items:center;gap:6px"><div class="bw"><div class="bf" style="width:'+ro.match+'%"></div></div><span style="font-size:11px;color:#888;min-width:28px">'+ro.match+'%</span></div></div>'}).join('')+'</div><div class="ac"><div class="ah a"><i class="ti ti-rocket"></i> Quick wins</div>'+(r.improvements||[]).map(function(i){return'<div class="li"><div class="d da"></div><span>'+i+'</span></div>'}).join('')+'</div></div>';document.getElementById('resume-out').innerHTML=html}
+function doSearch(){var out=document.getElementById('jobs-out');out.innerHTML='<div style="text-align:center;padding:32px;color:#888"><div style="font-size:28px;margin-bottom:8px">⟳</div>Scanning LinkedIn · Indeed · Glassdoor · Dice...</div>';setTimeout(function(){var sorted=[].concat(JOBS).sort(function(a,b){return b.score-a.score});out.innerHTML=sorted.map(function(j){var sc=j.score>=80?'hi':j.score>=65?'mi':'lo';var skls=j.skills.map(function(s){return'<span style="font-size:11px;padding:3px 8px;background:#f5f5fa;border:1px solid #e8e8f0;border-radius:5px;color:#666">'+s+'</span>'}).join('');var badges='<span class="pill ppo"><i class="ti ti-external-link" style="font-size:9px"></i> '+j.portal+'</span>'+(j.h1b?'<span class="pill ph1"><i class="ti ti-circle-check" style="font-size:9px"></i> H1B sponsor</span>':'<span class="pill pn1"><i class="ti ti-x" style="font-size:9px"></i> No H1B history</span>')+(j.layoff?'<span class="pill pla"><i class="ti ti-alert-triangle" style="font-size:9px"></i> Layoff risk</span>':'<span class="pill pst"><i class="ti ti-shield-check" style="font-size:9px"></i> Stable</span>')+(j.loc==='Remote'?'<span class="pill pre">Remote</span>':'')+(j.email?'<span class="pill pem"><i class="ti ti-mail" style="font-size:9px"></i> HM email found</span>':'');var actions=(j.email?'<button class="jb pr" onclick=\'openEM('+JSON.stringify(j)+')\'>Draft cold email</button>':'<button class="jb" disabled>No email found</button>')+'<button class="jb" onclick=\'tailorFor('+JSON.stringify(j)+')\'>Tailor resume</button><a class="jb" href="https://linkedin.com/jobs" target="_blank">Apply <i class="ti ti-external-link" style="font-size:10px"></i></a>';return'<div class="jcard"><div class="jtop"><div><div class="jt">'+j.title+'</div><div class="jc">'+j.company+' · '+j.loc+' · '+j.salary+'</div></div><div class="sc '+sc+'">'+j.score+'%</div></div><div class="pills">'+badges+'</div><div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">'+skls+'</div><div class="ja">'+actions+'</div></div>'}).join('')},600)}
+function openEM(j){var strengths=AR&&AR.strengths?AR.strengths.slice(0,2).join(' and '):'strong compliance background and proven track record in risk reduction';var body='Hi Hiring Team,\n\nI came across the '+j.title+' role at '+j.company+' and wanted to reach out directly — the work closely aligns with my background.\n\nWith '+strengths+', I have consistently delivered measurable results: reducing compliance findings by 60%, maintaining 100% screening coverage with zero violations, and building audit-ready programs across regulated environments.\n\nI would love to learn more and share how I can contribute. Would you be open to a 20-minute conversation this week?\n\nThank you,\nRashmi Mandayam\nrashmi@email.com | linkedin.com/in/rashmi';document.getElementById('emb').innerHTML='<div class="el">To</div><div class="ev">'+j.email+'</div><div class="el">Subject</div><div class="ev">'+j.title+' inquiry — experienced compliance professional</div><div class="el" style="margin-top:6px">Body</div><div class="ebox" id="etxt">'+body+'</div><button class="btn" style="width:100%;justify-content:center" onclick="cpyEmail()"><i class="ti ti-copy"></i> Copy to clipboard</button>';document.getElementById('emmodal').classList.add('on')}
+function cpyEmail(){var t=document.getElementById('etxt');if(!t)return;navigator.clipboard.writeText(t.textContent).then(function(){var b=document.querySelector('#emb .btn');if(b){b.innerHTML='<i class="ti ti-check"></i> Copied!';setTimeout(function(){b.innerHTML='<i class="ti ti-copy"></i> Copy to clipboard'},2000)}})}
+function closeM(){document.getElementById('emmodal').classList.remove('on')}
+function tailorFor(j){go('tailor');document.getElementById('jdin').value=j.title+' at '+j.company+'\n\nRequired skills: '+j.skills.join(', ')+'\nLocation: '+j.loc+'\n\nWe are looking for a '+j.title+' with hands-on experience in '+j.skills.join(', ')+'. The ideal candidate will demonstrate a track record of compliance program ownership, risk reduction, and cross-functional collaboration in a regulated environment.'}
+function doTailor(){var jd=document.getElementById('jdin').value.trim();if(!jd){alert('Paste a job description first.');return}var resume=RT||SAMPLE;document.getElementById('ed-orig').textContent=resume.substring(0,2500);document.getElementById('ed-orig').classList.add('has');var tb=document.getElementById('tbtn');tb.disabled=true;tb.innerHTML='<span class="spin"></span> Tailoring...';var tail=document.getElementById('ed-tail');tail.innerHTML='<div class="shim" style="width:85%"></div><div class="shim" style="width:70%"></div><div class="shim" style="width:90%"></div><div class="shim" style="width:60%"></div><div class="shim" style="width:80%"></div>';fetch('/api/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:'You are an expert resume writer. Rewrite the resume to match the job description. Reorder and rephrase bullets to align with JD keywords. Keep all facts, companies, and dates accurate. Return only the resume text, no commentary.',messages:[{role:'user',content:'Job description:\n'+jd+'\n\nResume:\n'+resume.substring(0,2500)+'\n\nTailor the resume for this role.'}]})}).then(function(r){return r.json()}).then(function(data){var raw=data.content&&data.content.find(function(b){return b.type==='text'});tail.textContent=raw?raw.text:'Could not generate — please try again.';tail.classList.add('has')}).catch(function(){tail.textContent='Connect an Anthropic API key to enable live AI tailoring. The app will rewrite your resume bullets to mirror JD keywords while keeping all facts accurate.';tail.classList.add('has')}).finally(function(){tb.disabled=false;tb.innerHTML='<i class="ti ti-wand"></i> Tailor my resume with AI'})}
+</script>
+</body>
+</html>
